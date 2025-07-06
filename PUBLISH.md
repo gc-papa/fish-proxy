@@ -94,6 +94,7 @@ Consider submitting to:
 If after installing with Fisher the `init_proxy` command is not found, this is likely because Fisher needs individual function files to properly load commands.
 
 **Solution**: The plugin now includes individual function files in the `functions/` directory:
+
 - `functions/init_proxy.fish`
 - `functions/config_proxy.fish`
 - `functions/proxy.fish`
@@ -104,12 +105,14 @@ If after installing with Fisher the `init_proxy` command is not found, this is l
 **For users experiencing this issue:**
 
 1. **Reinstall the plugin:**
+
    ```fish
    fisher remove gc-papa/fish-proxy
    fisher install gc-papa/fish-proxy
    ```
 
 2. **Or reload your shell:**
+
    ```fish
    exec fish
    ```

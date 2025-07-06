@@ -25,9 +25,11 @@ noproxy
 # 6. Uninstall (when needed)
 
 # Complete uninstall with automatic cleanup
+
 fish_proxy_uninstall
 
 # Or for Fisher installations
+
 fisher remove gc-papa/fish-proxy
 
 # Configuration files are stored in ~/.fish-proxy/

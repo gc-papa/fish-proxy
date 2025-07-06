@@ -369,23 +369,23 @@ function fish_proxy_uninstall
     echo "========================================"
     echo "fish-proxy Manual Uninstall"
     echo "========================================"
-    
+
     # Disable proxy first
     echo "Disabling proxy..."
     __disable_proxy
-    
+
     # Remove configuration
     set config_dir (test -n "$XDG_CONFIG_HOME"; and echo $XDG_CONFIG_HOME; or echo $HOME)"/.fish-proxy"
     if test -d "$config_dir"
         echo "Removing configuration directory: $config_dir"
         rm -rf "$config_dir"
     end
-    
+
     # Reset git proxy settings
     echo "Resetting Git proxy settings..."
     git config --global --unset http.proxy 2>/dev/null
     git config --global --unset https.proxy 2>/dev/null
-    
+
     # Clean up package manager settings
     echo "Cleaning up package manager proxy settings..."
     if command -v npm >/dev/null
@@ -400,13 +400,13 @@ function fish_proxy_uninstall
         pnpm config delete proxy 2>/dev/null
         pnpm config delete https-proxy 2>/dev/null
     end
-    
+
     # Remove APT proxy configuration (requires sudo)
     if test -f "/etc/apt/apt.conf.d/proxy.conf"
         echo "APT proxy configuration found. Run the following command to remove it:"
         echo "sudo rm -f /etc/apt/apt.conf.d/proxy.conf"
     end
-    
+
     echo "========================================"
     echo "fish-proxy uninstalled successfully!"
     echo "You can now remove the plugin files manually if needed."

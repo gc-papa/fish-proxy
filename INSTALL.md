@@ -31,11 +31,13 @@ rm -rf ~/.fish-proxy
 For complete removal:
 
 1. **Disable proxy first** (if currently enabled):
+
    ```fish
    noproxy
    ```
 
 2. **Remove all configuration files**:
+
    ```fish
    rm -rf ~/.fish-proxy
    # or if using XDG_CONFIG_HOME:

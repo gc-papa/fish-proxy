@@ -90,15 +90,15 @@ noproxy
 
 ## Commands
 
-| Command             | Description                              |
-| ------------------- | ---------------------------------------- |
-| `init_proxy`        | Initialize plugin configuration          |
-| `config_proxy`      | Configure proxy settings interactively   |
-| `proxy`             | Enable proxy for all supported tools     |
-| `noproxy`           | Disable proxy for all supported tools    |
-| `myip`              | Check current IP address and location    |
-| `fish_proxy_update` | Update plugin (for manual installations) |
-| `fish_proxy_uninstall` | Complete manual uninstall with cleanup |
+| Command                | Description                              |
+| ---------------------- | ---------------------------------------- |
+| `init_proxy`           | Initialize plugin configuration          |
+| `config_proxy`         | Configure proxy settings interactively   |
+| `proxy`                | Enable proxy for all supported tools     |
+| `noproxy`              | Disable proxy for all supported tools    |
+| `myip`                 | Check current IP address and location    |
+| `fish_proxy_update`    | Update plugin (for manual installations) |
+| `fish_proxy_uninstall` | Complete manual uninstall with cleanup   |
 
 ## Supported Tools
 
@@ -147,6 +147,7 @@ rm -rf ~/.fish-proxy
 ### Complete Cleanup
 
 The `fish_proxy_uninstall` function will automatically:
+
 - Disable current proxy settings
 - Remove configuration files
 - Reset Git proxy settings
