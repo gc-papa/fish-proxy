@@ -30,10 +30,10 @@ end
 function __check_whether_init
     set config_dir (test -n "$XDG_CONFIG_HOME"; and echo $XDG_CONFIG_HOME; or echo $HOME)"/.fish-proxy"
     if not test -f "$config_dir/status"; or not test -f "$config_dir/http"; or not test -f "$config_dir/socks5"; or not test -f "$config_dir/no_proxy"
-        echo "----------------------------------------"
+        echo ----------------------------------------
         echo "You should run following command first:"
         echo "\$ init_proxy"
-        echo "----------------------------------------"
+        echo ----------------------------------------
     else
         __read_proxy_config
     end
@@ -42,14 +42,14 @@ end
 function __check_ip
     echo "========================================"
     echo "Check what your IP is"
-    echo "----------------------------------------"
+    echo ----------------------------------------
     set ipv4 (curl -s -k https://api-ipv4.ip.sb/ip -H 'user-agent: fish-proxy')
     if test -n "$ipv4"
         echo "IPv4: $ipv4"
     else
         echo "IPv4: -"
     end
-    echo "----------------------------------------"
+    echo ----------------------------------------
     set ipv6 (curl -s -k -m10 https://api-ipv6.ip.sb/ip -H 'user-agent: fish-proxy')
     if test -n "$ipv6"
         echo "IPv6: $ipv6"
@@ -59,7 +59,7 @@ function __check_ip
     if command -v python >/dev/null
         set geoip (curl -s -k https://api.ip.sb/geoip -H 'user-agent: fish-proxy')
         if test -n "$geoip"
-            echo "----------------------------------------"
+            echo ----------------------------------------
             echo "Info: "
             echo $geoip | python -m json.tool
         end
@@ -117,7 +117,7 @@ function __disable_proxy_all
 end
 
 function __enable_proxy_git
-    if test "$__FISHPROXY_GIT_PROXY_TYPE" = "http"
+    if test "$__FISHPROXY_GIT_PROXY_TYPE" = http
         git config --global http.proxy "$__FISHPROXY_HTTP"
         git config --global https.proxy "$__FISHPROXY_HTTP"
     else
@@ -182,7 +182,7 @@ function __enable_proxy
         __disable_proxy_npm
         __disable_proxy_apt
         echo "Done!"
-        echo "----------------------------------------"
+        echo ----------------------------------------
         echo "Enable proxy for:"
         echo "- shell"
         __enable_proxy_all
@@ -204,7 +204,7 @@ function __disable_proxy
 end
 
 function __auto_proxy
-    if test "$__FISHPROXY_STATUS" = "1"
+    if test "$__FISHPROXY_STATUS" = 1
         __enable_proxy_all
     end
 end
