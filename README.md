@@ -1,37 +1,45 @@
-# zsh-proxy
+# fish-proxy
 
-[![Author](https://img.shields.io/badge/Author-Sukka-b68469.svg?style=flat-square)](https://skk.moe)
-[![License](https://img.shields.io/github/license/sukkaw/zsh-proxy.svg?style=flat-square)](./LICENSE)
+[![License](https://img.shields.io/github/license/gc-papa/fish-proxy.svg?style=flat-square)](./LICENSE)
+[![Fish Shell](https://img.shields.io/badge/fish-shell-blue.svg?style=flat-square)](https://fishshell.com/)
+[![Fisher](https://img.shields.io/badge/fisher-compatible-green.svg?style=flat-square)](https://github.com/jorgebucaran/fisher)
 
-:nut_and_bolt: An [`oh-my-zsh`](https://ohmyz.sh/) plugin to configure proxy for some packages manager and software.
+🐟 A Fish shell plugin to configure proxy for package managers and software.
+
+**This is a Fish shell conversion of the original [zsh-proxy](https://github.com/sukkaw/zsh-proxy) plugin by [Sukka](https://github.com/SukkaW).**
+
+## Features
+
+- 🔧 Easy proxy configuration with interactive setup
+- 🌐 Support for HTTP, HTTPS, SOCKS5, and SOCKS5h proxies
+- 📦 Automatic proxy configuration for: Git, NPM, Yarn, PNPM, APT
+- 🔍 IP checking to verify proxy status
+- 🎣 Fisher compatible installation
+- 🐠 Native Fish shell syntax and conventions
 
 ## Installation
 
-### oh-my-zsh
+### Using Fisher (Recommended)
 
-Firstly, clone this repository in `oh-my-zsh`'s plugins directory.
-
-```bash
-git clone https://github.com/sukkaw/zsh-proxy.git ~/.oh-my-zsh/custom/plugins/zsh-proxy
+```fish
+fisher install gc-papa/fish-proxy
 ```
 
-Secondly, activate the plugin in `~/.zshrc`. Enable it by adding `zsh-proxy` to the [plugins array](https://github.com/robbyrussell/oh-my-zsh/blob/master/templates/zshrc.zsh-template#L66).
+### Manual Installation
 
-```
-plugins=(
-    [plugins
-     ...]
-    zsh-proxy
-)
+1. Clone this repository:
+```fish
+git clone https://github.com/gc-papa/fish-proxy.git ~/.config/fish/plugins/fish-proxy
 ```
 
-### Antigen
+2. Add to your `~/.config/fish/config.fish`:
+```fish
+source ~/.config/fish/plugins/fish-proxy/fish-proxy.fish
+```
 
-[Antigen](https://github.com/zsh-users/antigen) is a zsh plugin manager, and it support `oh-my-zsh` plugin as well. You only need to add `antigen bundle sukkaw/zsh-proxy` to your `.zshrc` with your other bundle commands if you are using Antigen. Antigen will handle cloning the plugin for you automatically the next time you start zsh. You can also add the plugin to a running zsh with `antigen bundle sukkaw/zsh-proxy` for testing before adding it to your `.zshrc`.
+## Quick Start
 
-----
-
-Congratulations! Open a new terminal or run `source $HOME/.zshrc`. If you see following lines, you have successfully installed `zsh-proxy`:
+After installation, open a new terminal and you'll see:
 
 ```
 ----------------------------------------
@@ -40,97 +48,125 @@ $ init_proxy
 ----------------------------------------
 ```
 
-## Usage
+### 1. Initialize the plugin
 
-### `init_proxy`
-
-The tip mentioned below will show up next time you open a new terminal if you haven't  initialized the plugin with `init_proxy`.
-
-After you run `init_proxy`, it is time to configure the plugin.
-
-### `config_proxy`
-
-Execute `config_proxy` will lead you to zsh-proxy configuration. Fill in socks5 & http proxy address in format `address:port` like `127.0.0.1:1080` & `127.0.0.1:8080`.
-
-Default configuration of socks5 proxy is `127.0.0.1:1080`, and http proxy is `127.0.0.1:8080`. You can leave any of them blank during configuration to use their default configuration.
-
-Currently `zsh-proxy` doesn't support proxy with authentication, but I am working on it.
-
-### `proxy`
-
-After you configure the `zsh-proxy`, you are good to go. Try following command will enable proxy for supported package manager & software:
-
-```bash
-$ proxy
+```fish
+init_proxy
 ```
 
-And next time you open a new terminal, zsh-proxy will automatically enable proxy for you.
+### 2. Configure proxy settings
 
-### `noproxy`
-
-If you want to disable proxy, you can run following command:
-
-```bash
-$ noproxy
+```fish
+config_proxy
 ```
 
-### `myip`
+You'll be prompted to enter:
+- SOCKS5 proxy (default: 127.0.0.1:1080)
+- SOCKS5 type (socks5 or socks5h)
+- HTTP proxy (default: 127.0.0.1:8080)
+- No proxy domains (default: localhost,127.0.0.1,localaddress,.localdomain.com)
+- Git proxy type (socks5 or http)
 
-If you forget whether you have enabled proxy or not, it is fine to run `proxy` command directly, as `proxy` will reset all the proxy before enable them. But the smarter way is to use following command to check which IP you are using now:
+### 3. Enable proxy
 
-```bash
-$ myip
+```fish
+proxy
 ```
 
-Check procedure will use `curl` and the IP data come from `ipip.net`, `ip.cn` & `ip.gs`.
+### 4. Check your IP
+
+```fish
+myip
+```
+
+### 5. Disable proxy when needed
+
+```fish
+noproxy
+```
+
+## Commands
+
+| Command | Description |
+|---------|-------------|
+| `init_proxy` | Initialize plugin configuration |
+| `config_proxy` | Configure proxy settings interactively |
+| `proxy` | Enable proxy for all supported tools |
+| `noproxy` | Disable proxy for all supported tools |
+| `myip` | Check current IP address and location |
+| `fish_proxy_update` | Update plugin (for manual installations) |
+
+## Supported Tools
+
+fish-proxy automatically configures proxy for:
+
+- **Environment variables**: `http_proxy`, `https_proxy`, `ftp_proxy`, `rsync_proxy`, `all_proxy`, `no_proxy`
+- **Git**: HTTP/HTTPS repository operations
+- **NPM**: Package installation and registry access
+- **Yarn**: Package management
+- **PNPM**: Package management
+- **APT**: Package manager (Linux)
+
+## Configuration
+
+Configuration files are stored in `~/.fish-proxy/` (or `$XDG_CONFIG_HOME/.fish-proxy/`):
+
+- `status`: Proxy enabled/disabled status
+- `http`: HTTP proxy configuration
+- `socks5`: SOCKS5 proxy configuration
+- `no_proxy`: Domains to exclude from proxy
+- `git_proxy_type`: Git proxy type (http or socks5)
+
+## Automatic Proxy
+
+When enabled, fish-proxy will automatically set proxy environment variables each time you open a new terminal session.
 
 ## Uninstallation
 
-**If you install `zsh-proxy` with Antigen**, you need to remove `antigen bundle sukkaw/zsh-proxy` to disable the plugin.
-**If you install `zsh-proxy` with oh-myzsh**, you need to remove `zsh-proxy` item from plugin array, then run `rm -rf ~/.oh-my-zsh/custom/plugins/zsh-proxy` to remove the plugin.
+### Fisher
 
-And you can clean up files & folders created by `zsh-proxy` using following command:
-
-```bash
-$ rm -rf ~/.zsh-proxy
+```fish
+fisher remove gc-papa/fish-proxy
 ```
 
-## Supported
+### Manual
 
-`zsh-proxy` currently support those package manager & software:
+```fish
+rm -rf ~/.config/fish/plugins/fish-proxy
+rm -rf ~/.fish-proxy
+```
 
-- `http_proxy`
-- `https_proxy`
-- `ftp_proxy`
-- `rsync_proxy`
-- `all_proxy`
-- git (http)
-- npm & yarn
-- apt
+## Differences from zsh-proxy
 
-## Todo List
+- 🐠 Native Fish shell syntax and functions
+- 🎣 Fisher package manager compatibility
+- 🔧 XDG Base Directory specification support
+- 📁 Configuration stored in `~/.fish-proxy/` instead of `~/.zsh-proxy/`
+- 🔄 Fish-specific variable management (`set -gx` instead of `export`)
 
-- socks5 & http proxy with authentication.
-- check whether the program exist before enable proxy for it
-- proxy for sudo user (`env_keep` or sorts of things)
-- proxy for:
-  - yum
-  - pip
-  - gradle
-  - git with ssh
-  - gem
-- `no_proxy` config
-- learn some from [arch wiki](https://wiki.archlinux.org/index.php/Proxy_server)
+## Contributing
 
-## Author
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-**zsh-proxy** © [Sukka](https://github.com/SukkaW), Released under the [MIT](https://github.com/SukkaW/zsh-proxy/blob/master/LICENSE) License.<br>
-Authored and maintained by Sukka with help from contributors ([list](https://github.com/SukkaW/zsh-proxy/graphs/contributors)).
+## License
 
-> [Personal Website](https://skk.moe) · [Blog](https://blog.skk.moe) · GitHub [@SukkaW](https://github.com/SukkaW) · Telegram Channel [@SukkaChannel](https://t.me/SukkaChannel) · Twitter [@isukkaw](https://twitter.com/isukkaw) · Keybase [@sukka](https://keybase.io/sukka)
+MIT License - see [LICENSE](./LICENSE) file for details.
 
-<p align="center">
-  <a href="https://github.com/sponsors/SukkaW/">
-    <img src="https://sponsor.cdn.skk.moe/sponsors.svg"/>
-  </a>
-</p>
+## Credits
+
+- **Original zsh-proxy**: [Sukka](https://github.com/SukkaW) - [zsh-proxy](https://github.com/sukkaw/zsh-proxy)
+- **Fish conversion**: [gc-papa](https://github.com/gc-papa)
+
+## Acknowledgments
+
+- Thanks to [Sukka](https://github.com/SukkaW) for the original zsh-proxy plugin
+- Thanks to the Fish shell community for the excellent documentation
+- Thanks to [jorgebucaran](https://github.com/jorgebucaran) for Fisher
+
+---
+
+**🐟 Happy fishing with proxies!**

@@ -1,0 +1,36 @@
+{
+  "name": "fish-proxy",
+  "version": "1.0.0",
+  "description": "A Fish shell plugin to configure proxy for package managers and software",
+  "keywords": ["fish", "proxy", "shell", "plugin", "fisher"],
+  "homepage": "https://github.com/gc-papa/fish-proxy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gc-papa/fish-proxy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gc-papa/fish-proxy/issues"
+  },
+  "author": {
+    "name": "gc-papa",
+    "url": "https://github.com/gc-papa"
+  },
+  "license": "MIT",
+  "files": [
+    "fish-proxy.fish",
+    "conf.d/fish-proxy.fish",
+    "README.md",
+    "LICENSE"
+  ],
+  "fisher": {
+    "main": "fish-proxy.fish",
+    "conf": "conf.d/fish-proxy.fish"
+  },
+  "credits": {
+    "original": {
+      "name": "zsh-proxy",
+      "author": "Sukka",
+      "url": "https://github.com/sukkaw/zsh-proxy"
+    }
+  }
+}
