@@ -45,12 +45,14 @@ git push -u origin main
 3. Tag version: `v1.0.0`
 4. Release title: `fish-proxy v1.0.0 - Fish Shell Proxy Plugin`
 5. Description:
-```markdown
+
+````markdown
 🐟 First release of fish-proxy - A Fish shell proxy management plugin
 
 This is a Fish shell conversion of the excellent [zsh-proxy](https://github.com/sukkaw/zsh-proxy) plugin by [Sukka](https://github.com/SukkaW).
 
 ## Features
+
 - Easy proxy configuration with interactive setup
 - Support for HTTP, HTTPS, SOCKS5, and SOCKS5h proxies
 - Automatic proxy configuration for Git, NPM, Yarn, PNPM, APT
@@ -58,13 +60,17 @@ This is a Fish shell conversion of the excellent [zsh-proxy](https://github.com/
 - Native Fish shell syntax and conventions
 
 ## Installation
+
 ```fish
 fisher install gc-papa/fish-proxy
 ```
+````
 
 ## Credits
+
 Special thanks to [Sukka](https://github.com/SukkaW) for the original zsh-proxy plugin.
-```
+
+````
 
 ### 4. Test Installation
 
@@ -72,21 +78,71 @@ After publishing, test the Fisher installation:
 
 ```fish
 fisher install gc-papa/fish-proxy
-```
+````
 
 ### 5. Optional: Add to Fish Plugin Lists
 
 Consider submitting to:
-- [Awesome Fish](https://github.com/jorgebucaran/awesome-fish) 
+
+- [Awesome Fish](https://github.com/jorgebucaran/awesome-fish)
 - [Oh My Fish](https://github.com/oh-my-fish/oh-my-fish)
+
+## Troubleshooting
+
+### Issue: `init_proxy` command not found
+
+If after installing with Fisher the `init_proxy` command is not found, this is likely because Fisher needs individual function files to properly load commands.
+
+**Solution**: The plugin now includes individual function files in the `functions/` directory:
+- `functions/init_proxy.fish`
+- `functions/config_proxy.fish`
+- `functions/proxy.fish`
+- `functions/noproxy.fish`
+- `functions/myip.fish`
+- `functions/fish_proxy_update.fish`
+
+**For users experiencing this issue:**
+
+1. **Reinstall the plugin:**
+   ```fish
+   fisher remove gc-papa/fish-proxy
+   fisher install gc-papa/fish-proxy
+   ```
+
+2. **Or reload your shell:**
+   ```fish
+   exec fish
+   ```
+
+3. **Or manually source the configuration:**
+   ```fish
+   source ~/.config/fish/conf.d/fish-proxy.fish
+   ```
+
+### Testing Installation
+
+After installation, test that all functions are available:
+
+```fish
+functions | grep -E '(init_proxy|config_proxy|proxy|noproxy|myip)'
+```
+
+You should see all five functions listed.
 
 ## Repository Structure:
 
 ```
 fish-proxy/
 ├── fish-proxy.fish          # Main plugin file
+├── functions/               # Individual function files (for Fisher)
+│   ├── init_proxy.fish
+│   ├── config_proxy.fish
+│   ├── proxy.fish
+│   ├── noproxy.fish
+│   ├── myip.fish
+│   └── fish_proxy_update.fish
 ├── conf.d/
-│   └── fish-proxy.fish     # Fisher configuration
+│   └── fish-proxy.fish     # Fisher configuration and auto-loader
 ├── README.md               # Main documentation
 ├── LICENSE                 # MIT License (dual copyright)
 ├── package.json            # Package configuration

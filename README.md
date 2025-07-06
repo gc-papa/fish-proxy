@@ -28,11 +28,13 @@ fisher install gc-papa/fish-proxy
 ### Manual Installation
 
 1. Clone this repository:
+
 ```fish
 git clone https://github.com/gc-papa/fish-proxy.git ~/.config/fish/plugins/fish-proxy
 ```
 
 2. Add to your `~/.config/fish/config.fish`:
+
 ```fish
 source ~/.config/fish/plugins/fish-proxy/fish-proxy.fish
 ```
@@ -61,6 +63,7 @@ config_proxy
 ```
 
 You'll be prompted to enter:
+
 - SOCKS5 proxy (default: 127.0.0.1:1080)
 - SOCKS5 type (socks5 or socks5h)
 - HTTP proxy (default: 127.0.0.1:8080)
@@ -87,14 +90,15 @@ noproxy
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `init_proxy` | Initialize plugin configuration |
-| `config_proxy` | Configure proxy settings interactively |
-| `proxy` | Enable proxy for all supported tools |
-| `noproxy` | Disable proxy for all supported tools |
-| `myip` | Check current IP address and location |
+| Command             | Description                              |
+| ------------------- | ---------------------------------------- |
+| `init_proxy`        | Initialize plugin configuration          |
+| `config_proxy`      | Configure proxy settings interactively   |
+| `proxy`             | Enable proxy for all supported tools     |
+| `noproxy`           | Disable proxy for all supported tools    |
+| `myip`              | Check current IP address and location    |
 | `fish_proxy_update` | Update plugin (for manual installations) |
+| `fish_proxy_uninstall` | Complete manual uninstall with cleanup |
 
 ## Supported Tools
 
@@ -132,9 +136,22 @@ fisher remove gc-papa/fish-proxy
 ### Manual
 
 ```fish
+# Option 1: Use the built-in uninstall function
+fish_proxy_uninstall
+
+# Option 2: Manual removal
 rm -rf ~/.config/fish/plugins/fish-proxy
 rm -rf ~/.fish-proxy
 ```
+
+### Complete Cleanup
+
+The `fish_proxy_uninstall` function will automatically:
+- Disable current proxy settings
+- Remove configuration files
+- Reset Git proxy settings
+- Clean up package manager proxy settings
+- Provide instructions for APT proxy removal (requires sudo)
 
 ## Differences from zsh-proxy
 

@@ -9,10 +9,10 @@
 #                                            |___/
 # -------------------------------------------------
 # fish-proxy - A proxy plugin for fish shell
-# 
+#
 # Original zsh-proxy by Sukka (https://skk.moe)
 # Fish conversion by gc-papa (https://github.com/gc-papa)
-# 
+#
 # Repository: https://github.com/gc-papa/fish-proxy
 # License: MIT
 
@@ -45,10 +45,10 @@ end
 function __check_whether_init
     set config_dir (test -n "$XDG_CONFIG_HOME"; and echo $XDG_CONFIG_HOME; or echo $HOME)"/.fish-proxy"
     if not test -f "$config_dir/status"; or not test -f "$config_dir/http"; or not test -f "$config_dir/socks5"; or not test -f "$config_dir/no_proxy"
-        echo "----------------------------------------"
+        echo ----------------------------------------
         echo "You should run following command first:"
         echo "\$ init_proxy"
-        echo "----------------------------------------"
+        echo ----------------------------------------
     else
         __read_proxy_config
     end
@@ -57,14 +57,14 @@ end
 function __check_ip
     echo "========================================"
     echo "Check what your IP is"
-    echo "----------------------------------------"
+    echo ----------------------------------------
     set ipv4 (curl -s -k https://api-ipv4.ip.sb/ip -H 'user-agent: fish-proxy')
     if test -n "$ipv4"
         echo "IPv4: $ipv4"
     else
         echo "IPv4: -"
     end
-    echo "----------------------------------------"
+    echo ----------------------------------------
     set ipv6 (curl -s -k -m10 https://api-ipv6.ip.sb/ip -H 'user-agent: fish-proxy')
     if test -n "$ipv6"
         echo "IPv6: $ipv6"
@@ -74,7 +74,7 @@ function __check_ip
     if command -v python >/dev/null
         set geoip (curl -s -k https://api.ip.sb/geoip -H 'user-agent: fish-proxy')
         if test -n "$geoip"
-            echo "----------------------------------------"
+            echo ----------------------------------------
             echo "Info: "
             echo $geoip | python -m json.tool
         end
@@ -85,7 +85,7 @@ end
 function __config_proxy
     echo "========================================"
     echo "Fish Proxy Plugin Config"
-    echo "----------------------------------------"
+    echo ----------------------------------------
 
     echo -n "[socks5 proxy] {Default as 127.0.0.1:1080}
 (address:port): "
@@ -114,7 +114,7 @@ function __config_proxy
         set __read_socks5 "127.0.0.1:1080"
     end
     if test -z "$__read_socks5_type"
-        set __read_socks5_type "1"
+        set __read_socks5_type 1
     end
     if test -z "$__read_http"
         set __read_http "127.0.0.1:8080"
@@ -123,18 +123,18 @@ function __config_proxy
         set __read_no_proxy "localhost,127.0.0.1,localaddress,.localdomain.com"
     end
     if test -z "$__read_git_proxy_type"
-        set __read_git_proxy_type "socks5"
+        set __read_git_proxy_type socks5
     end
 
     set config_dir (test -n "$XDG_CONFIG_HOME"; and echo $XDG_CONFIG_HOME; or echo $HOME)"/.fish-proxy"
-    echo "http://$__read_http" > "$config_dir/http"
-    if test "$__read_socks5_type" = "2"
-        echo "socks5h://$__read_socks5" > "$config_dir/socks5"
+    echo "http://$__read_http" >"$config_dir/http"
+    if test "$__read_socks5_type" = 2
+        echo "socks5h://$__read_socks5" >"$config_dir/socks5"
     else
-        echo "socks5://$__read_socks5" > "$config_dir/socks5"
+        echo "socks5://$__read_socks5" >"$config_dir/socks5"
     end
-    echo "$__read_no_proxy" > "$config_dir/no_proxy"
-    echo "$__read_git_proxy_type" > "$config_dir/git_proxy_type"
+    echo "$__read_no_proxy" >"$config_dir/no_proxy"
+    echo "$__read_git_proxy_type" >"$config_dir/git_proxy_type"
 
     __read_proxy_config
 end
@@ -200,7 +200,7 @@ end
 # Proxy for Git
 
 function __enable_proxy_git
-    if test "$__FISHPROXY_GIT_PROXY_TYPE" = "http"
+    if test "$__FISHPROXY_GIT_PROXY_TYPE" = http
         git config --global http.proxy "$__FISHPROXY_HTTP"
         git config --global https.proxy "$__FISHPROXY_HTTP"
     else
@@ -271,7 +271,7 @@ function __enable_proxy
         __disable_proxy_npm
         __disable_proxy_apt
         echo "Done!"
-        echo "----------------------------------------"
+        echo ----------------------------------------
         echo "Enable proxy for:"
         echo "- shell"
         __enable_proxy_all
@@ -293,7 +293,7 @@ function __disable_proxy
 end
 
 function __auto_proxy
-    if test "$__FISHPROXY_STATUS" = "1"
+    if test "$__FISHPROXY_STATUS" = 1
         __enable_proxy_all
     end
 end
@@ -302,7 +302,7 @@ function __fish_proxy_update
     set current_dir (pwd)
     if test -d "$HOME/.config/fish/conf.d"
         cd "$HOME/.config/fish/conf.d"
-        if test -d "fish-proxy"
+        if test -d fish-proxy
             cd fish-proxy
             git fetch --all
             git reset --hard origin/main
@@ -317,12 +317,12 @@ function init_proxy
     set config_dir (test -n "$XDG_CONFIG_HOME"; and echo $XDG_CONFIG_HOME; or echo $HOME)"/.fish-proxy"
     mkdir -p "$config_dir"
     touch "$config_dir/status"
-    echo "0" > "$config_dir/status"
+    echo 0 >"$config_dir/status"
     touch "$config_dir/http"
     touch "$config_dir/socks5"
     touch "$config_dir/no_proxy"
     touch "$config_dir/git_proxy_type"
-    echo "----------------------------------------"
+    echo ----------------------------------------
     echo "Great! The fish-proxy is initialized"
     echo ""
     echo '  ______ _____ _    _   _____  '
@@ -333,10 +333,10 @@ function init_proxy
     echo ' /_____|_____/|_|  |_| |_|   |_|  \___/_/\_\\__, |'
     echo '                                             __/ |'
     echo '                                            |___/ '
-    echo "----------------------------------------"
+    echo ----------------------------------------
     echo "Now you might want to run following command:"
     echo "\$ config_proxy"
-    echo "----------------------------------------"
+    echo ----------------------------------------
 end
 
 function config_proxy
@@ -345,14 +345,14 @@ end
 
 function proxy
     set config_dir (test -n "$XDG_CONFIG_HOME"; and echo $XDG_CONFIG_HOME; or echo $HOME)"/.fish-proxy"
-    echo "1" > "$config_dir/status"
+    echo 1 >"$config_dir/status"
     __enable_proxy
     __check_ip
 end
 
 function noproxy
     set config_dir (test -n "$XDG_CONFIG_HOME"; and echo $XDG_CONFIG_HOME; or echo $HOME)"/.fish-proxy"
-    echo "0" > "$config_dir/status"
+    echo 0 >"$config_dir/status"
     __disable_proxy
     __check_ip
 end
@@ -363,6 +363,54 @@ end
 
 function fish_proxy_update
     __fish_proxy_update
+end
+
+function fish_proxy_uninstall
+    echo "========================================"
+    echo "fish-proxy Manual Uninstall"
+    echo "========================================"
+    
+    # Disable proxy first
+    echo "Disabling proxy..."
+    __disable_proxy
+    
+    # Remove configuration
+    set config_dir (test -n "$XDG_CONFIG_HOME"; and echo $XDG_CONFIG_HOME; or echo $HOME)"/.fish-proxy"
+    if test -d "$config_dir"
+        echo "Removing configuration directory: $config_dir"
+        rm -rf "$config_dir"
+    end
+    
+    # Reset git proxy settings
+    echo "Resetting Git proxy settings..."
+    git config --global --unset http.proxy 2>/dev/null
+    git config --global --unset https.proxy 2>/dev/null
+    
+    # Clean up package manager settings
+    echo "Cleaning up package manager proxy settings..."
+    if command -v npm >/dev/null
+        npm config delete proxy 2>/dev/null
+        npm config delete https-proxy 2>/dev/null
+    end
+    if command -v yarn >/dev/null
+        yarn config delete proxy 2>/dev/null
+        yarn config delete https-proxy 2>/dev/null
+    end
+    if command -v pnpm >/dev/null
+        pnpm config delete proxy 2>/dev/null
+        pnpm config delete https-proxy 2>/dev/null
+    end
+    
+    # Remove APT proxy configuration (requires sudo)
+    if test -f "/etc/apt/apt.conf.d/proxy.conf"
+        echo "APT proxy configuration found. Run the following command to remove it:"
+        echo "sudo rm -f /etc/apt/apt.conf.d/proxy.conf"
+    end
+    
+    echo "========================================"
+    echo "fish-proxy uninstalled successfully!"
+    echo "You can now remove the plugin files manually if needed."
+    echo "========================================"
 end
 
 # Initialize on load

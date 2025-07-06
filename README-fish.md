@@ -19,16 +19,18 @@ fisher install your-username/fish-proxy
 ### Manual Installation
 
 1. Clone this repository:
+
 ```fish
 git clone https://github.com/your-username/fish-proxy.git ~/.config/fish/plugins/fish-proxy
 ```
 
 2. Add to your `~/.config/fish/config.fish`:
+
 ```fish
 source ~/.config/fish/plugins/fish-proxy/fish-proxy.fish
 ```
 
-----
+---
 
 Congratulations! Open a new terminal or run `source ~/.config/fish/config.fish`. If you see following lines, you have successfully installed `fish-proxy`:
 
