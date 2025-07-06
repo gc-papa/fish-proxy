@@ -7,6 +7,16 @@ function _fish_proxy_install --on-event fish_proxy_install
     end
 end
 
+# Load helper functions when fish starts
+if status is-interactive
+    # Ensure helper functions are available
+    if functions -q __fish_proxy_helpers
+        # Helper functions are already loaded
+    else
+        echo "fish-proxy: Loading helper functions..."
+    end
+end
+
 function _fish_proxy_update --on-event fish_proxy_update
     # Handle updates
     echo "fish-proxy: Plugin updated!"
