@@ -58,6 +58,5 @@ end=============="
     echo "$__read_git_proxy_type" >"$config_dir/git_proxy_type"
 
     # Reload configuration
-    source (dirname (status --current-filename))/../fish-proxy.fish
     __read_proxy_config
 end
