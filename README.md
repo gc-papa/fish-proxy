@@ -162,6 +162,27 @@ The `fish_proxy_uninstall` function will automatically:
 - 📁 Configuration stored in `~/.fish-proxy/` instead of `~/.zsh-proxy/`
 - 🔄 Fish-specific variable management (`set -gx` instead of `export`)
 
+## Troubleshooting
+
+### Functions not found after installation
+
+If you get "command not found" errors after installing with Fisher, try:
+
+```fish
+# Manual reload of helper functions
+for helper in ~/.config/fish/functions/__*.fish
+    source $helper 2>/dev/null
+end
+```
+
+### Proxy authentication issues
+
+If you're behind a corporate proxy, `myip` might show authentication pages. This is normal - the plugin detects your network environment correctly.
+
+### Network connectivity issues
+
+The `myip` function requires internet access to external IP services. If you're in a restricted network, this command might timeout or fail.
+
 ## Contributing
 
 1. Fork the repository

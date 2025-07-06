@@ -7,10 +7,10 @@ function config_proxy
         set -g __FISHPROXY_NO_PROXY ""
         set -g __FISHPROXY_GIT_PROXY_TYPE ""
     end
-    
+
     echo "========================================"
     echo "Fish Proxy Plugin Config"
-    echo "----------------------------------------"
+    echo ----------------------------------------
 
     echo -n "[socks5 proxy] {Default as 127.0.0.1:1080}
 (address:port): "
@@ -39,7 +39,7 @@ function config_proxy
         set __read_socks5 "127.0.0.1:1080"
     end
     if test -z "$__read_socks5_type"
-        set __read_socks5_type "1"
+        set __read_socks5_type 1
     end
     if test -z "$__read_http"
         set __read_http "127.0.0.1:8080"
@@ -48,18 +48,18 @@ function config_proxy
         set __read_no_proxy "localhost,127.0.0.1,localaddress,.localdomain.com"
     end
     if test -z "$__read_git_proxy_type"
-        set __read_git_proxy_type "socks5"
+        set __read_git_proxy_type socks5
     end
 
     set config_dir (test -n "$XDG_CONFIG_HOME"; and echo $XDG_CONFIG_HOME; or echo $HOME)"/.fish-proxy"
-    echo "http://$__read_http" > "$config_dir/http"
-    if test "$__read_socks5_type" = "2"
-        echo "socks5h://$__read_socks5" > "$config_dir/socks5"
+    echo "http://$__read_http" >"$config_dir/http"
+    if test "$__read_socks5_type" = 2
+        echo "socks5h://$__read_socks5" >"$config_dir/socks5"
     else
-        echo "socks5://$__read_socks5" > "$config_dir/socks5"
+        echo "socks5://$__read_socks5" >"$config_dir/socks5"
     end
-    echo "$__read_no_proxy" > "$config_dir/no_proxy"
-    echo "$__read_git_proxy_type" > "$config_dir/git_proxy_type"
+    echo "$__read_no_proxy" >"$config_dir/no_proxy"
+    echo "$__read_git_proxy_type" >"$config_dir/git_proxy_type"
 
     # Read the configuration back into global variables
     set -g __FISHPROXY_STATUS (cat "$config_dir/status" 2>/dev/null)
@@ -67,6 +67,6 @@ function config_proxy
     set -g __FISHPROXY_HTTP (cat "$config_dir/http" 2>/dev/null)
     set -g __FISHPROXY_NO_PROXY (cat "$config_dir/no_proxy" 2>/dev/null)
     set -g __FISHPROXY_GIT_PROXY_TYPE (cat "$config_dir/git_proxy_type" 2>/dev/null)
-    
+
     echo "Configuration saved successfully!"
 end
